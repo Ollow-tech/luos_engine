@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "gpio.h"
+#include "tim.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -27,6 +28,7 @@
 #include "serial_network.h"
 #include "galvo.h"
 #include "laser.h"
+#include "motor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,11 +89,16 @@ int main(void)
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    MX_TIM2_Init();
+    MX_TIM4_Init();
+    MX_TIM16_Init();
+    MX_TIM3_Init();
     /* USER CODE BEGIN 2 */
     Luos_Init();
     Serial_Init();
     Galvo_Init();
     Laser_Init();
+    Stepper_Init();
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -105,6 +112,7 @@ int main(void)
         Serial_Loop();
         Galvo_Loop();
         Laser_Loop();
+        Stepper_Loop();
     }
     /* USER CODE END 3 */
 }
@@ -158,7 +166,11 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    LaserPeriod_Callback(htim);
+    StepperPeriod_Callback(htim);
+}
 /* USER CODE END 4 */
 
 /**

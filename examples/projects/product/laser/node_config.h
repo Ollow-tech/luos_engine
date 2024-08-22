@@ -47,10 +47,11 @@
  *    NBR_RETRY             |             10             | Send Retry number in case of NACK or collision
  ******************************************************************************/
 
-#define MAX_LOCAL_SERVICE_NUMBER 2
-#define MAX_MSG_NB               50
-#define MSG_BUFFER_SIZE          2048
-
+#define MAX_LOCAL_SERVICE_NUMBER 5
+#define MAX_LOCAL_PROFILE_NUMBER 6
+#define MAX_MSG_NB               100
+#define MSG_BUFFER_SIZE 4096
+#define NBR_RETRY 99
 /*******************************************************************************
  * LUOS HAL LIBRARY DEFINITION
 *******************************************************************************
@@ -85,6 +86,7 @@
  *    ROBUS_TIMER_IRQHANDLER   | Callback function for Timer IRQ handler
 ******************************************************************************/
 
+
 /*******************************************************************************
  * FLASH CONFIGURATION FOR APP WITH BOOTLOADER
  ********************************************************************************
@@ -95,5 +97,49 @@
  *    APP_START_ADDRESS     | 0x0800C800                 | Start address of application with bootloader
  *    APP_END_ADDRESS       | FLASH_END                  | End address of application with bootloader
  ******************************************************************************/
+
+
+// /*******************************************************************************
+//  * STEPPER MOTORs CONFIG
+//  ******************************************************************************/
+#define STEPPER 1
+#define NB_STEPPER_SERVICES 2
+
+/**************************
+ *  STEPPER A Definition
+ **************************/
+#define ALIAS_A "M_Tape"
+
+#define ENABLE_A_PORT GPIOA
+#define ENABLE_A_PIN  GPIO_PIN_1
+
+#define ENABLE_LOGIC_A false
+
+#define DIR_A_PORT GPIOA
+#define DIR_A_PIN  GPIO_PIN_0
+
+#define TIM_HANDLE_A htim4
+#define TIM_A        TIM4
+#define CHANNEL_A    TIM_CHANNEL_2
+
+#define TIM_ENCODER_A TIM3
+#define TIM_ENCODER_HANDLE_A htim3
+
+/**************************
+ *  STEPPER B Definition
+ **************************/
+#define ALIAS_B "M_Coil"
+
+#define ENABLE_B_PORT GPIOA
+#define ENABLE_B_PIN  GPIO_PIN_9
+
+#define ENABLE_LOGIC_B false
+
+#define DIR_B_PORT GPIOA
+#define DIR_B_PIN  GPIO_PIN_8
+
+#define TIM_HANDLE_B htim16
+#define TIM_B        TIM16
+#define CHANNEL_B    TIM_CHANNEL_1
 
 #endif /* _NODE_CONFIG_H_ */

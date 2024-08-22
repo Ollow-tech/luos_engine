@@ -111,8 +111,8 @@
 #define PIPE_RX_BUFFER_SIZE   65000
 #define PIPE_TX_BUFFER_SIZE   65000
 #define SERIAL_RX_BUFFER_SIZE 65000
-#define INIT_TIME             150
+#define INIT_TIME             800
 #define GATE_REFRESH_TIME_S   0.05f
-#define SERIAL_PORT           "/dev/cu.usbmodem1102" // "/dev/cu.usbserial-D308N897"
+// #define SERIAL_PORT           "/dev/cu.usbmodem1102" // "/dev/cu.usbserial-D308N897"
 
 #endif /* _NODE_CONFIG_H_ */

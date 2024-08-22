@@ -26,5 +26,6 @@ void Xy_Start(streaming_channel_t *stream, time_luos_t period);
 void Xy_Stop(void);
 void Xy_BufferMode(buffer_mode_t mode);
 void Xy_SetPeriod(time_luos_t period);
+void Xy_SetNbPatternToDo(uint32_t pattern_number);
 
 #endif /* XY2_100_H */

@@ -16,7 +16,7 @@ streaming_channel_t stream;
 time_luos_t period;
 control_t control;
 buffer_mode_t buffer_mode = SINGLE;
-
+float nb_pattern_galvo   = 0;
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -96,6 +96,7 @@ static void Galvo_MsgHandler(service_t *service, const msg_t *msg)
                 // overwrite the streaming structure to manage the bufferin loop
                 // set the write pointer in the end of the data
                 stream.data_ptr = stream_buf + size / stream.data_size;
+
                 if (stream.data_ptr < stream.sample_ptr)
                 {
                     // If the read pointer overlap the write pointer point it back to the begining of the buffer
@@ -128,5 +129,12 @@ static void Galvo_MsgHandler(service_t *service, const msg_t *msg)
     {
         // Get the time
         TimeOD_TimeFromMsg(&period, msg);
+        // period = TimeOD_TimeFrom_s(0.000966);
+    }
+    if (msg->header.cmd == SET_NB_PATTERN)
+    {
+        // Get the number of pattern to do
+        memcpy(&nb_pattern_galvo, msg->data, msg->header.size);
+        Xy_SetNbPatternToDo((uint32_t)nb_pattern_galvo);
     }
 }

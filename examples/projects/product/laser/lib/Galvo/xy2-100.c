@@ -58,6 +58,9 @@ xy2_interpolation_t xy2_interpolation;
 uint8_t dma_buff[GALVO_BUFFER_SIZE] = {0};
 volatile time_luos_t sample_period;
 buffer_mode_t xy_buffer_mode = SINGLE;
+
+volatile uint32_t nb_pattern = 0;
+volatile uint32_t nb_pattern_to_do = 0;
 /*******************************************************************************
  * Function
  ******************************************************************************/
@@ -181,6 +184,7 @@ void DMA1_Channel3_IRQHandler()
 // Start the trajectory with a given buffer at a given sampling frequency
 void Xy_Start(streaming_channel_t *stream, time_luos_t period)
 {
+    nb_pattern = 0;
     // First check if we are already running
     if (traj_control.flux == PLAY)
     {
@@ -319,15 +323,27 @@ bool Xy_GetNextTrajSample(void)
                 return false;
                 break;
             case CONTINUOUS:
+                nb_pattern++;
                 // We are in continuous mode, we have to loop on the ring buffer
                 // Put the read pointer at the begining of the buffer
                 streaming_channel->sample_ptr = streaming_channel->ring_buffer;
-                // Get the first sample
-                if (Streaming_GetAvailableSampleNB(streaming_channel) == 0)
+
+                if (nb_pattern == nb_pattern_to_do)
                 {
-                    // We don't have any new sample to compute
+                    // Put the read pointer at the begining of the buffer
+                    streaming_channel->sample_ptr = streaming_channel->ring_buffer;
                     return false;
                 }
+                else
+                {
+                    // Get the first sample
+                    if (Streaming_GetAvailableSampleNB(streaming_channel) == 0)
+                    {
+                        // We don't have any new sample to compute
+                        return false;
+                    }
+                }
+
                 break;
             case STREAM:
                 // We are in stream mode, we have to wait for new data
@@ -362,4 +378,9 @@ void Xy_BufferMode(buffer_mode_t mode)
 void Xy_SetPeriod(time_luos_t period)
 {
     sample_period = period;
+}
+
+void Xy_SetNbPatternToDo(uint32_t pattern_number)
+{
+    nb_pattern_to_do = pattern_number;
 }

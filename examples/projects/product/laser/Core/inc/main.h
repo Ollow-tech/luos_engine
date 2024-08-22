@@ -24,50 +24,46 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal.h"
 
-    /* Private includes ----------------------------------------------------------*/
-    /* USER CODE BEGIN Includes */
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 
-    /* USER CODE END Includes */
+/* USER CODE END Includes */
 
-    /* Exported types ------------------------------------------------------------*/
-    /* USER CODE BEGIN ET */
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 
-    /* USER CODE END ET */
+/* USER CODE END ET */
 
-    /* Exported constants --------------------------------------------------------*/
-    /* USER CODE BEGIN EC */
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
 
-    /* USER CODE END EC */
+/* USER CODE END EC */
 
-    /* Exported macro ------------------------------------------------------------*/
-    /* USER CODE BEGIN EM */
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
 
-    /* USER CODE END EM */
+/* USER CODE END EM */
 
-    /* Exported functions prototypes ---------------------------------------------*/
-    void Error_Handler(void);
+/* Exported functions prototypes ---------------------------------------------*/
+void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define BTN_Pin       GPIO_PIN_11
-#define BTN_GPIO_Port GPIOA
-#define LED_Pin       GPIO_PIN_5
-#define LED_GPIO_Port GPIOA
-    /* USER CODE BEGIN Private defines */
 #define DIR_TAPE_Pin GPIO_PIN_0
 #define DIR_TAPE_GPIO_Port GPIOA
 #define ENABLE_TAPE_Pin GPIO_PIN_1
 #define ENABLE_TAPE_GPIO_Port GPIOA
+#define LED_Pin GPIO_PIN_5
+#define LED_GPIO_Port GPIOA
 #define DIR_COIL_Pin GPIO_PIN_8
 #define DIR_COIL_GPIO_Port GPIOA
 #define ENABLE_COIL_Pin GPIO_PIN_9
@@ -76,12 +72,12 @@ extern "C"
 #define STEP_TAPE_GPIO_Port GPIOB
 #define STEP_COIL_Pin GPIO_PIN_8
 #define STEP_COIL_GPIO_Port GPIOB
-    /* USER CODE END Private defines */
+/* USER CODE BEGIN Private defines */
+
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* __MAIN_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

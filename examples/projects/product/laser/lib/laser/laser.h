@@ -22,19 +22,19 @@
 #define PWM_TIMER_CLK()               \
     do                                \
     {                                 \
-        __HAL_RCC_TIM15_CLK_ENABLE(); \
+        __HAL_RCC_TIM17_CLK_ENABLE(); \
     } while (0U)
 
-#define PWM_PERIOD 5000 - 1
+#define LASER_PWM_FREQ 5000
 
-#define LASER_PWM_PIN  GPIO_PIN_15
+#define LASER_PWM_PIN  GPIO_PIN_9
 #define LASER_PWM_PORT GPIOB
-#define LASER_PWM_AF   GPIO_AF14_TIM15
+#define LASER_PWM_AF   GPIO_AF14_TIM17
 
 #ifndef LASER_PWM_TIMER
-    #define LASER_PWM_TIMER TIM15
+    #define LASER_PWM_TIMER TIM17
 #endif
-#define LASER_PWM_CHANNEL TIM_CHANNEL_2
+#define LASER_PWM_CHANNEL TIM_CHANNEL_1
 
 #ifndef DEFAULT_SAMPLE_FREQUENCY
     #define DEFAULT_SAMPLE_FREQUENCY 10000.0
@@ -49,5 +49,7 @@
  ******************************************************************************/
 void Laser_Init(void);
 void Laser_Loop(void);
+
+void LaserPeriod_Callback(TIM_HandleTypeDef *htim);
 
 #endif /* LASER_H */
