@@ -11,6 +11,7 @@
 #include "gate_config.h"
 #include "pipe_link.h"
 #include "_routing_table.h"
+#include "data_manager.h"
 
 /*******************************************************************************
  * Definitions
@@ -124,13 +125,31 @@ void Bootloader_JsonToLuos(service_t *service, char *bin_data, json_t const *boo
 
         uint32_t binary_size = 0;
         json_t *item         = NULL;
+        
+        static bool first    = true;
+        static time_luos_t update_time_bkp;
         if (strcmp(type, "start") == 0)
         {
+            if (first)
+            {
+                // save the update time and put it to 0
+                update_time_bkp = update_time;
+                update_time     = TimeOD_TimeFrom_ms(0);
+                DataManager_collect(service);
+                first           = false;
+            }
             boot_msg.header.cmd = BOOTLOADER_START;
             Luos_SendMsg(service, &boot_msg);
         }
         else if (strcmp(type, "stop") == 0)
         {
+            if (!first)
+            {
+                // restore the update time
+                update_time = update_time_bkp;
+                DataManager_collect(service);
+                first       = true;
+            }
             // Send stop command to bootloader app
             boot_msg.header.cmd = BOOTLOADER_STOP;
             Luos_SendMsg(service, &boot_msg);
