@@ -53,7 +53,6 @@ void Gate_Init(void)
  ******************************************************************************/
 void Gate_Loop(void)
 {
-    static uint32_t LastVoidMsg = 0;
     // We don't receive anything.
     // After 1s void reception send void data allowing client to send commands (because client could be synchronized to reception).
     if (LastReceptionDate == 0)
