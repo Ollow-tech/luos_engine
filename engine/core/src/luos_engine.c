@@ -19,7 +19,7 @@
  * Variables
  ******************************************************************************/
 const revision_t luos_version = {.major = 3, .minor = 0, .build = 0};
-package_t package_table[MAX_LOCAL_SERVICE_NUMBER];
+package_t package_table[MAX_LOCAL_SERVICE_NUMBER + LOCAL_PHY_NB];
 uint16_t package_number = 0;
 
 /*******************************************************************************
