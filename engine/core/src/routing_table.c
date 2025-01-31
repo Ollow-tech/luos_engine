@@ -185,28 +185,18 @@ static void RoutingTB_AddNumToAlias(char *alias, uint8_t num)
     uint8_t intsize = 1;
     if (num > 9)
     {
-        // The string size of num is 2
+        // The string size of num have a size of 2
         intsize = 2;
     }
-    if (num > 99) // only 2 digit are alowed when add alias number
-    {
-        // This is probably a mistake, put an error into the alias
-        memset(alias, 0, MAX_ALIAS_SIZE - 1);
-        memcpy(alias, "error", strlen("error"));
-        return;
-    }
+    LUOS_ASSERT(num < 100); // only 2 digit are alowed when add alias number
     // Change size to fit into 15 characters
     if (strlen(alias) > (MAX_ALIAS_SIZE - 1 - intsize))
     {
         alias[(MAX_ALIAS_SIZE - 1 - intsize)] = '\0';
     }
-    else
-    {
-        alias[strlen(alias)] = '\0';
-    }
     // Add a number at the end of the alias
-    char *alias_copy = alias;
-    sprintf(alias, "%s%d", alias_copy, num);
+    char *end_pointer = &alias[strlen(alias)];
+    sprintf(end_pointer, "%d", num);
 }
 
 /******************************************************************************
