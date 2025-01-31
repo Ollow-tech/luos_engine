@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, windows-latest, ubuntu-22.04]
     steps:
       - name: Check out Luos repository
         uses: actions/checkout@v3
@@ -44,26 +44,26 @@ jobs:
           # Run Unit tests
           platformio test -vvv
 
-      - if: matrix.os == 'ubuntu-latest'
+      - if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo apt-get install -y lcov
           lcov -d .pio/build/native/ -c -o lcov.info
-          lcov --remove lcov.info '*/usr/*' '*/Platforms/*' '*/bootloader/*' '*/.pio/*' '*/HAL/*' '*/test/*' '*/network/*' -o lcov.info
+          lcov --remove lcov.info '*/usr/*' '*/Platforms/*' '*/bootloader/*' '*/.pio/*' '*/HAL/*' '*/test/*' '*/network/*' -o lcov.info --ignore-errors empty
 
-      - if: matrix.os == 'ubuntu-latest'
+      - if: matrix.os == 'ubuntu-22.04'
         name: Coveralls
         uses: coverallsapp/github-action@v2
 
   unit-tests:
     name: Unit tests
     needs: tests-run
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - run: echo "Tests succeed!"
 
   code-format:
     name: Code format
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out Luos repository
         uses: actions/checkout@v3
@@ -89,8 +89,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        project_folders:
-          [
+        project_folders: [
             examples/projects/l0,
             examples/projects/Arduino,
             examples/projects/NUCLEO-L432KC,
@@ -106,7 +105,7 @@ jobs:
             # examples/projects/ESP32,
             examples/projects/native,
           ]
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, windows-latest, ubuntu-22.04]
 
     steps:
       - name: Check out Luos repository
@@ -152,6 +151,6 @@ jobs:
   build-success:
     name: Build success
     needs: examples-build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - run: echo "Build succeed!"
